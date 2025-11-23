@@ -31,5 +31,10 @@ func Connect(dsn string) (*bun.DB, error) {
 		return nil, err
 	}
 
+	_, err = db.NewCreateTable().Model((*model.Message)(nil)).IfNotExists().Exec(ctx)
+	if err != nil {
+		return nil, err
+	}
+
 	return db, nil
 }

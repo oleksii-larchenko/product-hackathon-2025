@@ -32,14 +32,17 @@ func New() *Server {
 	client := openai.NewClient(openaiAPIKey)
 
 	userRepo := repository.NewUserRepository(bunDB)
+	messageRepo := repository.NewMessageRepository(bunDB)
 
 	authService := service.NewAuthService(userRepo)
 	summaryService := service.NewSummaryService(client)
+	chatService := service.NewChatService(messageRepo, client)
 
 	authHandler := handler.NewAuth(authService)
 	summaryHandler := handler.NewSummary(summaryService, userRepo)
+	chatHandler := handler.NewChat(chatService, messageRepo)
 
-	registerRoutes(r, authHandler, summaryHandler)
+	registerRoutes(r, authHandler, summaryHandler, chatHandler)
 
 	return &Server{router: r}
 }
