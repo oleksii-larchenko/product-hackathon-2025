@@ -10,7 +10,8 @@ import (
 
 type UserRepository interface {
 	Create(ctx context.Context, user *model.User) error
-	FindByEmailAndPassword(ctx context.Context, email, password string) (bool, error)
+	FindByEmailAndPassword(ctx context.Context, email, password string) (int, error)
+	UpdateQuizAnswersByID(ctx context.Context, userID int, quizAnswers string) error
 }
 
 type userRepository struct {
@@ -26,7 +27,7 @@ func (r *userRepository) Create(ctx context.Context, user *model.User) error {
 	return err
 }
 
-func (r *userRepository) FindByEmailAndPassword(ctx context.Context, email, password string) (bool, error) {
+func (r *userRepository) FindByEmailAndPassword(ctx context.Context, email, password string) (int, error) {
 	var user model.User
 
 	err := r.db.NewSelect().
@@ -36,8 +37,17 @@ func (r *userRepository) FindByEmailAndPassword(ctx context.Context, email, pass
 		Scan(ctx)
 
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 
-	return true, nil
+	return user.ID, nil
+}
+
+func (r *userRepository) UpdateQuizAnswersByID(ctx context.Context, userID int, quizAnswers string) error {
+	_, err := r.db.NewUpdate().
+		Model(&model.User{}).
+		Set("quiz_answers = ?", quizAnswers).
+		Where("id = ?", userID).
+		Exec(ctx)
+	return err
 }

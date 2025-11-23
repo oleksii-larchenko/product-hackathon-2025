@@ -14,5 +14,5 @@ func registerRoutes(
 	r.POST("/auth/register", auth.Register)
 	r.POST("/auth/login", auth.Login)
 
-	r.POST("/summary", summary.CreateSummary)
+	r.POST("/summary/{user_id}", summary.CreateSummary)
 }

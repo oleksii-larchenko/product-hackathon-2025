@@ -4,6 +4,7 @@ import (
 	"backend/internal/model"
 	"backend/internal/repository"
 	"context"
+	"math/rand"
 )
 
 type AuthService struct {
@@ -15,19 +16,24 @@ func NewAuthService(userRepo repository.UserRepository) *AuthService {
 }
 
 type RegisterParams struct {
-	Fullname string
 	Email    string
 	Password string
 }
 
-func (s *AuthService) RegisterUser(ctx context.Context, params RegisterParams) error {
+func (s *AuthService) RegisterUser(ctx context.Context, params RegisterParams) (int, error) {
+	userId := rand.Int()
+
 	user := &model.User{
-		Fullname: params.Fullname,
+		ID:       userId,
 		Email:    params.Email,
 		Password: params.Password,
 	}
 
-	return s.userRepo.Create(ctx, user)
+	if err := s.userRepo.Create(ctx, user); err != nil {
+		return 0, err
+	}
+
+	return userId, nil
 }
 
 type AuthParams struct {
@@ -35,6 +41,6 @@ type AuthParams struct {
 	Password string
 }
 
-func (s *AuthService) AuthorizeUser(ctx context.Context, params AuthParams) (bool, error) {
+func (s *AuthService) AuthorizeUser(ctx context.Context, params AuthParams) (int, error) {
 	return s.userRepo.FindByEmailAndPassword(ctx, params.Email, params.Password)
 }
