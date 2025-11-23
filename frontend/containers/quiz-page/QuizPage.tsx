@@ -5,11 +5,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { quiz } from "@/constants/quiz";
 import { submitQuiz } from "@/lib/api";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setResults } from "@/lib/slices/quizSlice";
 import type { QuizAnswer } from "@/types/quiz";
 import styles from "./styles.module.css";
 
 export const QuizPage = () => {
 	const router = useRouter();
+	const dispatch = useAppDispatch();
+	const user_id = useAppSelector((state) => state.auth.user_id);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [answers, setAnswers] = useState<QuizAnswer>({});
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -62,10 +66,19 @@ export const QuizPage = () => {
 		if (isLastQuestion) {
 			setIsSubmitting(true);
 			try {
-				await submitQuiz(answers);
+				if (!user_id) {
+					throw new Error("User not authenticated");
+				}
+
+				const results = await submitQuiz(answers, user_id);
+
+				dispatch(setResults(results));
+
+				localStorage.setItem("quizResults", JSON.stringify(results));
+
 				router.push("/quiz/results");
 			} catch (error) {
-				console.error("Failed to submit quiz:", error);
+				console.error("[QuizPage] Failed to submit quiz:", error);
 			} finally {
 				setIsSubmitting(false);
 			}

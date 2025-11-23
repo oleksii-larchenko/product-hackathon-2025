@@ -26,8 +26,8 @@ export interface QuizPayload {
 }
 
 export interface QuizResults {
-	business_description: string;
-	market_analysis: string;
+	overview: string;
+	market: string[];
 	focus_areas: string[];
 	risks: string[];
 }

@@ -1,32 +1,76 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "@/lib/hooks";
+import type { QuizResults as QuizResultsType } from "@/types/quiz";
 import styles from "./styles.module.css";
-
-const mockResults = {
-	business_description:
-		"Ваша ідея створити кав'ярню біля бізнес-центру є цікавою та має потенціал, особливо з акцентом на працевлаштуванні ветеранів. Це може залучити місцеву громаду та людей, які підтримують ветеранів.",
-	market_analysis: [
-		"У секторі харчової промисловості та ресторанному бізнесі спостерігається стабільний попит на кав'ярні та заклади з їжею у невеликих містах, де конкуренція може бути меншою, ніж у великих містах.",
-		"Типові конкуренти — це локальні кав'ярні, кондитерські та мережі швидкого харчування, але акцент на ветеранах може виділити вашу кав'ярню на фоні інших.",
-		"Основні послуги включають приготування кави, продаж сендвічів та десертів, а базове обладнання — це кавомашина, холодильник та піч для випічки.",
-		"Зазвичай для такого бізнесу потрібна команда з 3–10 осіб, включаючи бариста, кухаря та обслуговуючий персонал.",
-	],
-	focus_areas: [
-		"Покращити маркетингові навички для ефективного просування бізнесу.",
-		"Глибше вивчити податкове законодавство та звітність, щоб уникнути проблем.",
-		"Розробити детальний фінансовий план для управління витратами та доходами.",
-	],
-	risks: [
-		"Економічні ризики: нестабільність курсу гривні може вплинути на вартість продуктів; рекомендується формувати запас фінансів.",
-		"Правові ризики: можливі зміни в законодавстві щодо ведення бізнесу; слідкуйте за оновленнями та консультуйтесь з юристом.",
-		"Інфраструктурні ризики: поганий стан доріг або комунікацій може вплинути на постачання товарів; варто розглянути альтернативних постачальників.",
-	],
-};
 
 export const QuizResults = () => {
 	const router = useRouter();
+	const reduxResults = useAppSelector((state) => state.quiz.results);
+	const [results, setResults] = useState<QuizResultsType | null>(null);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (reduxResults) {
+			setResults(reduxResults);
+			setIsLoading(false);
+			return;
+		}
+
+		const storedResults = localStorage.getItem("quizResults");
+
+		if (storedResults) {
+			try {
+				const parsedResults = JSON.parse(storedResults) as QuizResultsType;
+				setResults(parsedResults);
+			} catch (parseError) {
+				console.error(
+					"[QuizResults] Failed to parse localStorage data:",
+					parseError,
+				);
+				setError("Failed to parse quiz results");
+			}
+		} else {
+			console.warn(
+				"[QuizResults] No quiz results found in Redux or localStorage",
+			);
+			setError("No quiz results found");
+		}
+
+		setIsLoading(false);
+	}, [reduxResults]);
+
+	if (isLoading) {
+		return (
+			<div className={styles.wrapper}>
+				<div className={styles.content}>
+					<p>Завантаження результатів...</p>
+				</div>
+			</div>
+		);
+	}
+
+	if (error || !results) {
+		console.error("[QuizResults] Error or no results:", { error, results });
+		return (
+			<div className={styles.wrapper}>
+				<div className={styles.content}>
+					<p>Помилка: {error || "Не вдалося завантажити результати"}</p>
+					<button
+						type="button"
+						onClick={() => router.push("/quiz")}
+						className={`${styles.button} ${styles.buttonPrimary}`}
+					>
+						Повернутися до квізу
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className={styles.wrapper}>
@@ -54,16 +98,14 @@ export const QuizResults = () => {
 
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>Опис бізнес-ідеї</h2>
-					<p className={styles.sectionText}>
-						{mockResults.business_description}
-					</p>
+					<p className={styles.sectionText}>{results.overview}</p>
 				</div>
 
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>Аналіз ринку</h2>
 					<ul className={styles.sectionList}>
-						{mockResults.market_analysis.map((item, index) => (
-							<li key={index} className={styles.listItem}>
+						{results.market.map((item) => (
+							<li key={item} className={styles.listItem}>
 								{item}
 							</li>
 						))}
@@ -73,8 +115,8 @@ export const QuizResults = () => {
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>Зони фокусу</h2>
 					<ul className={styles.sectionList}>
-						{mockResults.focus_areas.map((item, index) => (
-							<li key={index} className={styles.listItem}>
+						{results.focus_areas.map((item) => (
+							<li key={item} className={styles.listItem}>
 								{item}
 							</li>
 						))}
@@ -84,8 +126,8 @@ export const QuizResults = () => {
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>Ризики</h2>
 					<ul className={styles.sectionList}>
-						{mockResults.risks.map((item, index) => (
-							<li key={index} className={styles.listItem}>
+						{results.risks.map((item) => (
+							<li key={item} className={styles.listItem}>
 								{item}
 							</li>
 						))}
@@ -111,4 +153,3 @@ export const QuizResults = () => {
 		</div>
 	);
 };
-
