@@ -2,11 +2,15 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ChatSidebar } from "@/components/ChatSidebar/ChatSidebar";
 import { PageLayout } from "@/components/PageLayout/PageLayout";
+import { useAppDispatch } from "@/lib/hooks";
+import { openChat } from "@/lib/slices/chatSlice";
 import styles from "./styles.module.css";
 
 export const MainPage = () => {
 	const router = useRouter();
+	const dispatch = useAppDispatch();
 
 	return (
 		<PageLayout>
@@ -143,7 +147,11 @@ export const MainPage = () => {
 								конкурентів та підготовку грантової заявки. Доступний у
 								будь-який час.
 							</p>
-							<button type="button" className={styles.aiButton}>
+							<button
+								type="button"
+								className={styles.aiButton}
+								onClick={() => dispatch(openChat())}
+							>
 								Почати AI консультацію
 							</button>
 						</div>
@@ -165,7 +173,16 @@ export const MainPage = () => {
 								<br />
 								Витрати, доходи, ризики та фінмодель — у зручному форматі.
 							</p>
-							<button type="button" className={styles.aiButton}>
+							<button
+								type="button"
+								className={styles.aiButton}
+								onClick={() =>
+									window.open(
+										"https://www.calculator.net/payback-period-calculator.html",
+										"_blank",
+									)
+								}
+							>
 								Розрахувати бізнес-план
 							</button>
 						</div>
@@ -470,6 +487,7 @@ export const MainPage = () => {
 					</div>
 				</div>
 			</div>
+			<ChatSidebar />
 		</PageLayout>
 	);
 };

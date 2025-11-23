@@ -138,6 +138,12 @@ export const QuizResults = () => {
 					<button
 						type="button"
 						className={`${styles.button} ${styles.buttonPrimary}`}
+						onClick={() =>
+							window.open(
+								"https://www.calculator.net/payback-period-calculator.html",
+								"_blank",
+							)
+						}
 					>
 						Розрахувати бізнес план
 					</button>
