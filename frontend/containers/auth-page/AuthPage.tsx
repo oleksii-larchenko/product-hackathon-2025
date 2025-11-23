@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState, useEffect } from "react";
+import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { clearError, loginAsync, registerAsync } from "@/lib/slices/authSlice";
@@ -14,19 +14,8 @@ export const AuthPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
 
 	const dispatch = useAppDispatch();
-	const { isLoading, error, isAuthenticated } = useAppSelector(
-		(state) => state.auth,
-	);
+	const { isLoading, error } = useAppSelector((state) => state.auth);
 
-	useEffect(() => {
-		if (isAuthenticated) {
-			if (mode === "register") {
-				router.push("/quiz");
-			} else {
-				router.push("/");
-			}
-		}
-	}, [isAuthenticated, mode, router]);
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -39,9 +28,15 @@ export const AuthPage = () => {
 		dispatch(clearError());
 
 		if (mode === "login") {
-			await dispatch(loginAsync({ email, password }));
+			const result = await dispatch(loginAsync({ email, password }));
+			if (loginAsync.fulfilled.match(result)) {
+				router.push("/");
+			}
 		} else {
-			await dispatch(registerAsync({ email, password }));
+			const result = await dispatch(registerAsync({ email, password }));
+			if (registerAsync.fulfilled.match(result)) {
+				router.push("/quiz");
+			}
 		}
 	};
 

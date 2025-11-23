@@ -26,18 +26,38 @@ const getErrorMessage = (error: unknown): string => {
 	return "An unexpected error occurred";
 };
 
-export const registerUser = async (email: string, password: string) => {
+export interface RegisterResponse {
+	user_id: number;
+}
+
+export interface LoginResponse {
+	user_id: number;
+}
+
+export const registerUser = async (
+	email: string,
+	password: string,
+): Promise<RegisterResponse> => {
 	try {
-		const response = await api.post("/auth/register", { email, password });
+		const response = await api.post<RegisterResponse>("/auth/register", {
+			email,
+			password,
+		});
 		return response.data;
 	} catch (error) {
 		throw new Error(getErrorMessage(error));
 	}
 };
 
-export const loginUser = async (email: string, password: string) => {
+export const loginUser = async (
+	email: string,
+	password: string,
+): Promise<LoginResponse> => {
 	try {
-		const response = await api.post("/auth/login", { email, password });
+		const response = await api.post<LoginResponse>("/auth/login", {
+			email,
+			password,
+		});
 		return response.data;
 	} catch (error) {
 		throw new Error(getErrorMessage(error));
