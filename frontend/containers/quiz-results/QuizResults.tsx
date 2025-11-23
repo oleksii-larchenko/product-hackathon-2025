@@ -93,7 +93,7 @@ export const QuizResults = () => {
 
 			<div className={styles.content}>
 				<h1 className={styles.title}>
-					Результати пройденого квізу та рекмендації:
+					Результати пройденого квізу та рекомендації:
 				</h1>
 
 				<div className={styles.section}>
@@ -137,20 +137,8 @@ export const QuizResults = () => {
 				<div className={styles.actions}>
 					<button
 						type="button"
-						className={`${styles.button} ${styles.buttonPrimary}`}
-						onClick={() =>
-							window.open(
-								"https://www.calculator.net/payback-period-calculator.html",
-								"_blank",
-							)
-						}
-					>
-						Розрахувати бізнес план
-					</button>
-					<button
-						type="button"
 						onClick={() => router.push("/")}
-						className={`${styles.button} ${styles.buttonSecondary}`}
+						className={`${styles.button} ${styles.buttonPrimary}`}
 					>
 						Перейти в кабінет
 					</button>

@@ -165,7 +165,7 @@ export const MainPage = () => {
 									height={32}
 								/>
 								<h3 className={styles.aiCardTitle}>
-									AI розрахунок бізнес-плану
+									Калькулятор беззбитковості
 								</h3>
 							</div>
 							<p className={styles.aiCardDescription}>
@@ -183,7 +183,7 @@ export const MainPage = () => {
 									)
 								}
 							>
-								Розрахувати бізнес-план
+								Розрахувати
 							</button>
 						</div>
 					</div>
