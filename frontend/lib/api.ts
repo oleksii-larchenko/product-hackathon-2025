@@ -110,3 +110,38 @@ export const submitQuiz = async (
 		throw new Error(getErrorMessage(error));
 	}
 };
+
+export interface ChatMessageResponse {
+	role: "user" | "assistant";
+	content: string;
+}
+
+export interface ChatMessagesResponse {
+	[orderNumber: number]: ChatMessageResponse;
+}
+
+export const sendChatMessage = async (
+	userId: number,
+	message: string,
+): Promise<ChatMessageResponse> => {
+	try {
+		const response = await api.post<ChatMessageResponse>(
+			`/chat/${userId}`,
+			{ message },
+		);
+		return response.data;
+	} catch (error) {
+		throw new Error(getErrorMessage(error));
+	}
+};
+
+export const getChatMessages = async (
+	userId: number,
+): Promise<ChatMessagesResponse> => {
+	try {
+		const response = await api.get<ChatMessagesResponse>(`/chat/${userId}`);
+		return response.data;
+	} catch (error) {
+		throw new Error(getErrorMessage(error));
+	}
+};
