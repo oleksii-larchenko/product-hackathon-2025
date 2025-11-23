@@ -22,7 +22,6 @@ func (h *AuthHandler) Register(ctx *fasthttp.RequestCtx) {
 	ctx.SetContentType("application/json; charset=utf-8")
 
 	var req struct {
-		Fullname string `json:"fullname"`
 		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
@@ -39,8 +38,7 @@ func (h *AuthHandler) Register(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	err := h.srv.RegisterUser(context.Background(), service.RegisterParams{
-		Fullname: req.Fullname,
+	userId, err := h.srv.RegisterUser(context.Background(), service.RegisterParams{
 		Email:    req.Email,
 		Password: req.Password,
 	})
@@ -51,7 +49,7 @@ func (h *AuthHandler) Register(ctx *fasthttp.RequestCtx) {
 	}
 
 	ctx.SetStatusCode(http.StatusOK)
-	json.NewEncoder(ctx).Encode(map[string]string{"message": "User registered successfully"})
+	json.NewEncoder(ctx).Encode(map[string]interface{}{"message": "User registered successfully", "user_id": userId})
 }
 
 func (h *AuthHandler) Login(ctx *fasthttp.RequestCtx) {
@@ -74,7 +72,7 @@ func (h *AuthHandler) Login(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	isAuthorized, err := h.srv.AuthorizeUser(context.Background(), service.AuthParams{
+	userId, err := h.srv.AuthorizeUser(context.Background(), service.AuthParams{
 		Email:    req.Email,
 		Password: req.Password,
 	})
@@ -84,12 +82,12 @@ func (h *AuthHandler) Login(ctx *fasthttp.RequestCtx) {
 		return
 	}
 
-	if !isAuthorized {
+	if userId == 0 {
 		ctx.SetStatusCode(http.StatusUnauthorized)
 		json.NewEncoder(ctx).Encode(map[string]string{"error": "Invalid email or password"})
 		return
 	}
 
 	ctx.SetStatusCode(http.StatusOK)
-	json.NewEncoder(ctx).Encode(map[string]string{"message": "Login successful"})
+	json.NewEncoder(ctx).Encode(map[string]interface{}{"message": "Login successful", "user_id": userId})
 }

@@ -37,7 +37,7 @@ func New() *Server {
 	summaryService := service.NewSummaryService(client)
 
 	authHandler := handler.NewAuth(authService)
-	summaryHandler := handler.NewSummary(summaryService)
+	summaryHandler := handler.NewSummary(summaryService, userRepo)
 
 	registerRoutes(r, authHandler, summaryHandler)
 
