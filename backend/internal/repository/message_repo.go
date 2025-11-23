@@ -35,3 +35,19 @@ func (r *messageRepository) GetAllMessagesByID(ctx context.Context, userId int) 
 		Scan(ctx)
 	return messages, err
 }
+
+func (r *messageRepository) GetThreadIDByUserID(ctx context.Context, userId int) (string, error) {
+	var message model.Message
+	err := r.db.NewSelect().
+		Model(&message).
+		Where("user_id = ?", userId).
+		Order("order_number ASC").
+		Limit(1).
+		Scan(ctx)
+
+	if err != nil {
+		return "", err
+	}
+
+	return message.ThreadID, nil
+}
