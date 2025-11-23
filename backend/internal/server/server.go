@@ -36,7 +36,7 @@ func New() *Server {
 
 	authService := service.NewAuthService(userRepo)
 	summaryService := service.NewSummaryService(client)
-	chatService := service.NewChatService(messageRepo, client)
+	chatService := service.NewChatService(messageRepo, userRepo, client)
 
 	authHandler := handler.NewAuth(authService)
 	summaryHandler := handler.NewSummary(summaryService, userRepo)

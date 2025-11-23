@@ -12,6 +12,7 @@ type UserRepository interface {
 	Create(ctx context.Context, user *model.User) error
 	FindByEmailAndPassword(ctx context.Context, email, password string) (int, error)
 	UpdateQuizAnswersByID(ctx context.Context, userID int, quizAnswers string) error
+	GetByID(ctx context.Context, userID int) (*model.User, error)
 }
 
 type userRepository struct {
@@ -50,4 +51,16 @@ func (r *userRepository) UpdateQuizAnswersByID(ctx context.Context, userID int, 
 		Where("id = ?", userID).
 		Exec(ctx)
 	return err
+}
+
+func (r *userRepository) GetByID(ctx context.Context, userID int) (*model.User, error) {
+	var user model.User
+	err := r.db.NewSelect().
+		Model(&user).
+		Where("id = ?", userID).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
