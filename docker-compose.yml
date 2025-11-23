@@ -16,7 +16,7 @@ services:
     build: ./backend
     environment:
       DATABASE_URL: postgres://your_username:your_password@postgres:5432/your_db_name
-      OPENAI_API_KEY: your_openai_key
+      OPENAI_API_KEY: $OPENAI_API_KEY
     ports:
       - "8082:8080"
     depends_on:

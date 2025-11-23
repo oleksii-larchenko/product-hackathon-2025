@@ -9,7 +9,10 @@ import (
 func registerRoutes(
 	r *router.Router,
 	auth *handler.AuthHandler,
+	summary *handler.SummaryHandler,
 ) {
 	r.POST("/auth/register", auth.Register)
 	r.POST("/auth/login", auth.Login)
+
+	r.POST("/summary", summary.CreateSummary)
 }
