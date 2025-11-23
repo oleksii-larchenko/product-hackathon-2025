@@ -38,5 +38,6 @@ func New() *Server {
 }
 
 func (s *Server) Listen(addr string) error {
-	return fasthttp.ListenAndServe(addr, s.router.Handler)
+	handler := corsMiddleware(s.router.Handler)
+	return fasthttp.ListenAndServe(addr, handler)
 }

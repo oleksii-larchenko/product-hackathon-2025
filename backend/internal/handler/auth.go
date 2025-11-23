@@ -19,6 +19,8 @@ func NewAuth(s *service.AuthService) *AuthHandler {
 }
 
 func (h *AuthHandler) Register(ctx *fasthttp.RequestCtx) {
+	ctx.SetContentType("application/json; charset=utf-8")
+
 	var req struct {
 		Fullname string `json:"fullname"`
 		Email    string `json:"email"`
@@ -27,6 +29,13 @@ func (h *AuthHandler) Register(ctx *fasthttp.RequestCtx) {
 
 	if err := json.Unmarshal(ctx.PostBody(), &req); err != nil {
 		ctx.SetStatusCode(http.StatusBadRequest)
+		json.NewEncoder(ctx).Encode(map[string]string{"error": "Invalid request body"})
+		return
+	}
+
+	if req.Email == "" || req.Password == "" {
+		ctx.SetStatusCode(http.StatusBadRequest)
+		json.NewEncoder(ctx).Encode(map[string]string{"error": "Email and password are required"})
 		return
 	}
 
@@ -37,13 +46,17 @@ func (h *AuthHandler) Register(ctx *fasthttp.RequestCtx) {
 	})
 	if err != nil {
 		ctx.SetStatusCode(http.StatusInternalServerError)
+		json.NewEncoder(ctx).Encode(map[string]string{"error": err.Error()})
 		return
 	}
 
 	ctx.SetStatusCode(http.StatusOK)
+	json.NewEncoder(ctx).Encode(map[string]string{"message": "User registered successfully"})
 }
 
 func (h *AuthHandler) Login(ctx *fasthttp.RequestCtx) {
+	ctx.SetContentType("application/json; charset=utf-8")
+
 	var req struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
@@ -51,6 +64,13 @@ func (h *AuthHandler) Login(ctx *fasthttp.RequestCtx) {
 
 	if err := json.Unmarshal(ctx.PostBody(), &req); err != nil {
 		ctx.SetStatusCode(http.StatusBadRequest)
+		json.NewEncoder(ctx).Encode(map[string]string{"error": "Invalid request body"})
+		return
+	}
+
+	if req.Email == "" || req.Password == "" {
+		ctx.SetStatusCode(http.StatusBadRequest)
+		json.NewEncoder(ctx).Encode(map[string]string{"error": "Email and password are required"})
 		return
 	}
 
@@ -60,13 +80,16 @@ func (h *AuthHandler) Login(ctx *fasthttp.RequestCtx) {
 	})
 	if err != nil {
 		ctx.SetStatusCode(http.StatusInternalServerError)
+		json.NewEncoder(ctx).Encode(map[string]string{"error": err.Error()})
 		return
 	}
 
 	if !isAuthorized {
 		ctx.SetStatusCode(http.StatusUnauthorized)
+		json.NewEncoder(ctx).Encode(map[string]string{"error": "Invalid email or password"})
 		return
 	}
 
 	ctx.SetStatusCode(http.StatusOK)
+	json.NewEncoder(ctx).Encode(map[string]string{"message": "Login successful"})
 }
