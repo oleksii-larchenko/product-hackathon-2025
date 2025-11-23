@@ -28,9 +28,11 @@ func (h *ChatHandler) AddMessage(ctx *fasthttp.RequestCtx) {
 	userIDStr := ctx.UserValue("user_id")
 	userID, err := strconv.Atoi(fmt.Sprintf("%v", userIDStr))
 	if err != nil {
+		fmt.Printf("[ChatHandler] Failed to parse user_id: %v, error: %v\n", userIDStr, err)
 		ctx.SetStatusCode(http.StatusBadRequest)
 		return
 	}
+	fmt.Printf("[ChatHandler] AddMessage called with userID: %d\n", userID)
 
 	var req struct {
 		Message string `json:"message"`

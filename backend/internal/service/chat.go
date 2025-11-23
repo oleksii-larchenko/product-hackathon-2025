@@ -147,11 +147,13 @@ func (s *ChatService) AddMessage(ctx context.Context, userID int, content string
 }
 
 func (s *ChatService) injectBusinessContext(ctx context.Context, userID int, threadID string) error {
-	// Get user's quiz answers
+	fmt.Printf("[ChatService] injectBusinessContext called with userID: %d\n", userID)
 	user, err := s.userRepo.GetByID(ctx, userID)
 	if err != nil {
-		return err
+		fmt.Printf("[ChatService] User not found with ID %d: %v\n", userID, err)
+		return fmt.Errorf("user not found with ID %d: %w", userID, err)
 	}
+	fmt.Printf("[ChatService] Found user with ID %d, email: %s\n", user.ID, user.Email)
 
 	if user.QuizAnswers == "" {
 		return nil

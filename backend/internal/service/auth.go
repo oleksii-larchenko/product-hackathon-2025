@@ -4,7 +4,9 @@ import (
 	"backend/internal/model"
 	"backend/internal/repository"
 	"context"
+	"fmt"
 	"math/rand"
+	"time"
 )
 
 type AuthService struct {
@@ -21,7 +23,8 @@ type RegisterParams struct {
 }
 
 func (s *AuthService) RegisterUser(ctx context.Context, params RegisterParams) (int, error) {
-	userId := rand.Int()
+	rand.Seed(time.Now().UnixNano())
+	userId := rand.Intn(2147483647) + 1
 
 	user := &model.User{
 		ID:       userId,
@@ -30,9 +33,11 @@ func (s *AuthService) RegisterUser(ctx context.Context, params RegisterParams) (
 	}
 
 	if err := s.userRepo.Create(ctx, user); err != nil {
+		fmt.Printf("[AuthService] Failed to create user with ID %d, email %s: %v\n", userId, params.Email, err)
 		return 0, err
 	}
 
+	fmt.Printf("[AuthService] Successfully created user with ID %d, email %s\n", userId, params.Email)
 	return userId, nil
 }
 
