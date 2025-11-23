@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MainPage } from "@/containers/main-page/MainPage";
+import { EventsPage } from "@/containers/events-page/EventsPage";
 import { useAppSelector } from "@/lib/hooks";
 
-export default function Home() {
+export default function EventsListPage() {
 	const router = useRouter();
 	const { isAuthenticated } = useAppSelector((state) => state.auth);
 	const [mounted, setMounted] = useState(false);
@@ -24,5 +24,6 @@ export default function Home() {
 		return null;
 	}
 
-	return <MainPage />;
+	return <EventsPage />;
 }
+

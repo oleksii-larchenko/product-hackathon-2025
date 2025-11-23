@@ -1,0 +1,271 @@
+.breadcrumbs {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	padding: 8px 16px;
+}
+
+.breadcrumbLink {
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #1c1c1c;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.breadcrumbSeparator {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+.breadcrumbCurrent {
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #888888;
+}
+
+.courseInfoCard {
+	background-color: #ffffff;
+	border-radius: 8px;
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.courseHeader {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.courseTitle {
+	font-family: "Outfit", sans-serif;
+	font-size: 34px;
+	font-weight: 700;
+	line-height: 42px;
+	color: #1c1c1c;
+	margin: 0;
+}
+
+.courseDescription {
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #3d3d3d;
+	margin: 0;
+}
+
+.divider {
+	height: 1px;
+	width: 100%;
+	background-color: #e9e9e9;
+}
+
+.courseMeta {
+	display: flex;
+	gap: 32px;
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #3d3d3d;
+	flex-wrap: wrap;
+}
+
+.twoColumnSection {
+	display: flex;
+	gap: 20px;
+	width: 100%;
+}
+
+.infoCard {
+	background-color: #ffffff;
+	border-radius: 8px;
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	flex: 1;
+}
+
+.infoCard:first-child {
+	min-height: 428px;
+}
+
+.infoCardTitle {
+	font-family: "Outfit", sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 32px;
+	color: #1c1c1c;
+	margin: 0;
+}
+
+.infoCardContent {
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #3d3d3d;
+}
+
+.infoCardContent p {
+	margin: 0;
+}
+
+.opportunitiesList {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.opportunityItem {
+	display: flex;
+	gap: 12px;
+	align-items: flex-start;
+}
+
+.tickIcon {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.opportunityItem p {
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #3d3d3d;
+	margin: 0;
+	flex: 1;
+}
+
+.programCard {
+	background-color: #ffffff;
+	border-radius: 8px;
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.programTitle {
+	font-family: "Outfit", sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 32px;
+	color: #1c1c1c;
+	margin: 0;
+}
+
+.lessonsList {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.lessonItem {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 20px 8px;
+	border-bottom: 1px solid #e9e9e9;
+}
+
+.lessonItemLast {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 20px 8px 0 8px;
+}
+
+.lessonHeader {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+	width: 100%;
+}
+
+.lessonTitle {
+	font-family: "Outfit", sans-serif;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 28px;
+	color: #1c1c1c;
+	margin: 0;
+	flex: 1;
+}
+
+.expandButton {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	width: 40px;
+	height: 40px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.videoContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 0;
+}
+
+.videoThumbnail {
+	position: relative;
+	width: 100%;
+	max-width: 1080px;
+	height: 571px;
+	border-radius: 24px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.videoImage {
+	object-fit: cover;
+	border-radius: 24px;
+}
+
+.videoOverlay {
+	position: absolute;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.45);
+	border-radius: 24px;
+}
+
+.playButton {
+	position: absolute;
+	width: 64px;
+	height: 64px;
+	background-color: #cbd0e3;
+	border-radius: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	cursor: pointer;
+}
+
