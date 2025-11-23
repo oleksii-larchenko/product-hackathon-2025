@@ -11,6 +11,7 @@ import {
 	setMessages,
 } from "@/lib/slices/chatSlice";
 import styles from "./styles.module.css";
+import { renderMarkdown } from "@/lib/markdown";
 
 const formatDate = (date: Date): string => {
 	const months = [
@@ -232,7 +233,7 @@ export const ChatSidebar = () => {
 														: styles.messageAssistant
 												}`}
 											>
-												<p>{message.content}</p>
+												<p>{renderMarkdown(message.content)}</p>
 											</div>
 										</div>
 									))}

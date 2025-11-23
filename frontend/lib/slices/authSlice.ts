@@ -14,8 +14,9 @@ const loadAuthFromStorage = (): Partial<AuthState> => {
 	}
 	const storedUserId = localStorage.getItem("auth_user_id");
 	const storedIsAuthenticated = localStorage.getItem("auth_is_authenticated");
+	const userId = storedUserId ? Number(storedUserId) : null;
 	return {
-		user_id: storedUserId ? Number(storedUserId) : null,
+		user_id: userId && !isNaN(userId) && userId > 0 ? userId : null,
 		isAuthenticated: storedIsAuthenticated === "true",
 	};
 };

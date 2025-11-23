@@ -2,9 +2,6 @@ import axios, { type AxiosError } from "axios";
 
 const api = axios.create({
 	baseURL: "http://localhost:8082",
-	headers: {
-		"Content-Type": "application/json",
-	},
 });
 
 const getErrorMessage = (error: unknown): string => {
@@ -43,6 +40,10 @@ export const registerUser = async (
 			email,
 			password,
 		});
+		if (!response.data || typeof response.data.user_id !== "number") {
+			console.error("[API] Invalid register response:", response.data);
+			throw new Error("Invalid response from server");
+		}
 		return response.data;
 	} catch (error) {
 		throw new Error(getErrorMessage(error));
@@ -58,6 +59,10 @@ export const loginUser = async (
 			email,
 			password,
 		});
+		if (!response.data || typeof response.data.user_id !== "number") {
+			console.error("[API] Invalid login response:", response.data);
+			throw new Error("Invalid response from server");
+		}
 		return response.data;
 	} catch (error) {
 		throw new Error(getErrorMessage(error));
@@ -75,20 +80,24 @@ export const submitQuiz = async (
 	answers: Record<string, string | string[]>,
 	userId: number,
 ): Promise<QuizResponse> => {
+	if (!userId || userId <= 0 || !Number.isInteger(userId)) {
+		throw new Error("Invalid user ID");
+	}
+
 	const payload = {
-		existing_business: answers.existing_business as string,
-		idea_stage: answers.idea_stage as string,
-		business_sector: answers.business_sector as string,
-		business_description: answers.business_description as string,
-		primary_location: answers.primary_location as string,
-		market_understanding: answers.market_understanding as string,
-		client_understanding: answers.client_understanding as string,
-		finance_skills: answers.finance_skills as string,
-		marketing_skills: answers.marketing_skills as string,
-		promotion_channels: answers.promotion_channels as string[],
-		tax_understanding: answers.tax_understanding as string,
-		contracts_experience: answers.contracts_experience as string,
-		hiring_plan: answers.hiring_plan as string,
+		existing_business: answers.existing_business || "",
+		idea_stage: answers.idea_stage || "",
+		business_sector: answers.business_sector || "",
+		business_description: answers.business_description || "",
+		primary_location: answers.primary_location || "",
+		market_understanding: answers.market_understanding || "",
+		client_understanding: answers.client_understanding || "",
+		finance_skills: answers.finance_skills || "",
+		marketing_skills: answers.marketing_skills || "",
+		promotion_channels: answers.promotion_channels || [],
+		tax_understanding: answers.tax_understanding || "",
+		contracts_experience: answers.contracts_experience || "",
+		hiring_plan: answers.hiring_plan || "",
 	};
 
 	try {
@@ -124,11 +133,13 @@ export const sendChatMessage = async (
 	userId: number,
 	message: string,
 ): Promise<ChatMessageResponse> => {
+	if (!userId || userId <= 0 || !Number.isInteger(userId)) {
+		throw new Error("Invalid user ID");
+	}
 	try {
-		const response = await api.post<ChatMessageResponse>(
-			`/chat/${userId}`,
-			{ message },
-		);
+		const response = await api.post<ChatMessageResponse>(`/chat/${userId}`, {
+			message,
+		});
 		return response.data;
 	} catch (error) {
 		throw new Error(getErrorMessage(error));
@@ -138,6 +149,9 @@ export const sendChatMessage = async (
 export const getChatMessages = async (
 	userId: number,
 ): Promise<ChatMessagesResponse> => {
+	if (!userId || userId <= 0 || !Number.isInteger(userId)) {
+		throw new Error("Invalid user ID");
+	}
 	try {
 		const response = await api.get<ChatMessagesResponse>(`/chat/${userId}`);
 		return response.data;
