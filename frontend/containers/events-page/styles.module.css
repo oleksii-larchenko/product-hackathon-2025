@@ -1,0 +1,113 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	width: 1160px;
+	max-width: 100%;
+	padding: 20px 0;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.title {
+	font-family: "Outfit", sans-serif;
+	font-size: 34px;
+	font-weight: 700;
+	line-height: 42px;
+	color: #1c1c1c;
+	margin: 0;
+}
+
+.subtitle {
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #3d3d3d;
+	margin: 0;
+}
+
+.eventsGrid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	width: 100%;
+}
+
+.eventCard {
+	background-color: #f6f6f6;
+	border-radius: 16px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	flex: 1;
+	min-width: 300px;
+	border: none;
+	cursor: pointer;
+	text-align: left;
+}
+
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tag {
+	background-color: #cbd0e3;
+	border-radius: 56px;
+	padding: 2px 12px;
+	font-family: "Poppins", sans-serif;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 20px;
+	color: #1c1c1c;
+}
+
+.eventTitle {
+	font-family: "Outfit", sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 32px;
+	color: #16192c;
+	margin: 0;
+}
+
+.eventDescription {
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 22px;
+	color: #3d3d3d;
+	margin: 0;
+}
+
+.divider {
+	height: 1px;
+	width: 100%;
+	background-color: #e9e9e9;
+}
+
+.eventMeta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	align-items: center;
+}
+
+.eventMetaItem {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 22px;
+	color: #3d3d3d;
+}
+

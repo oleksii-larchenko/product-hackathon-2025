@@ -1,14 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { MainPage } from "@/containers/main-page/MainPage";
+import { use, useEffect, useState } from "react";
+import { EventDetailPage } from "@/containers/event-detail-page/EventDetailPage";
 import { useAppSelector } from "@/lib/hooks";
 
-export default function Home() {
+export default function EventDetailPageRoute({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}) {
 	const router = useRouter();
 	const { isAuthenticated } = useAppSelector((state) => state.auth);
 	const [mounted, setMounted] = useState(false);
+	const { id } = use(params);
 
 	useEffect(() => {
 		setMounted(true);
@@ -24,5 +29,6 @@ export default function Home() {
 		return null;
 	}
 
-	return <MainPage />;
+	return <EventDetailPage eventId={id} />;
 }
+
