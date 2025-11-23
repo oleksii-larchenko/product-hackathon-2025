@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+
+**MANDATORY**: Use npm as package manager, never use pnpm or yarn.
