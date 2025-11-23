@@ -11,9 +11,12 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.10.1",
+    "axios": "^1.13.2",
     "next": "16.0.3",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

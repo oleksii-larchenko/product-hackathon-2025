@@ -1,3 +1,4 @@
+import { Providers } from "@/lib/Providers";
 import "./globals.css";
 
 export default function RootLayout({
@@ -16,7 +17,9 @@ export default function RootLayout({
 				/>
 				<title>Veteran Business Platform</title>
 			</head>
-			<body>{children}</body>
+			<body>
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	);
 }

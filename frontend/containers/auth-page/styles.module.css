@@ -4,5 +4,188 @@
     align-items: center;
     height: 100vh;
     width: 100%;
-    background-color: #d4d4e0;
+    background-color: #f0f0f0;
+}
+
+.container {
+	display: flex;
+	height: 50vh;
+	width: 75%;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.leftPanel {
+	flex: 1;
+	background-color: #1a1a1a;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+}
+
+.leftContent {
+	width: 100%;
+	max-width: 400px;
+}
+
+.welcomeTitle {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-bottom: 1rem;
+}
+
+.welcomeSubtitle {
+	font-size: 1rem;
+	color: #b0b0b0;
+	margin-bottom: 2rem;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.inputGroup {
+	position: relative;
+	width: 100%;
+}
+
+.input {
+	width: 100%;
+	padding: 0.875rem 1rem;
+	background-color: #2a2a2a;
+	border: 1px solid #3a3a3a;
+	border-radius: 0.5rem;
+	color: white;
+	font-size: 1rem;
+	outline: none;
+	transition: border-color 0.2s;
+}
+
+.input:focus {
+	border-color: #4a4a4a;
+}
+
+.input::placeholder {
+	color: #888;
+}
+
+.passwordToggle {
+	position: absolute;
+	right: 1rem;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 1.25rem;
+	color: #b0b0b0;
+	padding: 0;
+}
+
+.submitButton {
+	padding: 0.875rem 1.5rem;
+	background-color: white;
+	color: #1a1a1a;
+	border: none;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+
+.submitButton:hover:not(:disabled) {
+	opacity: 0.9;
+}
+
+.submitButton:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.forgotPassword {
+	color: #b0b0b0;
+	text-decoration: none;
+	font-size: 0.875rem;
+	text-align: center;
+	margin-top: -0.5rem;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	font-family: inherit;
+}
+
+.forgotPassword:hover {
+	color: white;
+}
+
+.error {
+	color: #ff4444;
+	font-size: 0.875rem;
+	padding: 0.5rem;
+	background-color: rgba(255, 68, 68, 0.1);
+	border-radius: 0.25rem;
+	text-align: center;
+}
+
+.rightPanel {
+	flex: 1;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+}
+
+.rightContent {
+	width: 100%;
+	max-width: 400px;
+	text-align: center;
+}
+
+.rightTitle {
+	font-size: 2rem;
+	font-weight: 700;
+	color: #1a1a1a;
+	margin-bottom: 1rem;
+}
+
+.rightSubtitle {
+	font-size: 1rem;
+	color: #666;
+	margin-bottom: 2rem;
+	line-height: 1.6;
+}
+
+.toggleButton {
+	padding: 0.875rem 2rem;
+	background-color: #1a1a1a;
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+
+.toggleButton:hover {
+	opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+	.container {
+		flex-direction: column;
+	}
+
+	.leftPanel,
+	.rightPanel {
+		flex: none;
+		min-height: 50vh;
+	}
 }
