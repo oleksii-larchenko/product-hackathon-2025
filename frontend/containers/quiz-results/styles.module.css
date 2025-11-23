@@ -1,0 +1,198 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 56px;
+	padding: 0 0 56px 0;
+	min-height: 100vh;
+	background-color: #ffffff;
+}
+
+.header {
+	width: 100%;
+	z-index: 2;
+}
+
+.headerContent {
+	display: flex;
+	gap: 500px;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 20px 24px;
+	position: relative;
+	width: 100%;
+}
+
+.progressBar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 2px;
+	width: 1440px;
+	max-width: 100%;
+}
+
+.progressBarBg {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 2px;
+	width: 100%;
+	background-color: #e4e4e7;
+}
+
+.logo {
+	height: 44px;
+	width: 57px;
+	position: relative;
+	flex-shrink: 0;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	align-items: center;
+	width: 680px;
+	max-width: 100%;
+	z-index: 1;
+	padding: 0 24px;
+}
+
+.title {
+	font-family: "Outfit", sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 32px;
+	color: #1b1b1b;
+	margin: 0;
+	width: 100%;
+}
+
+.section {
+	background-color: #f6f6f6;
+	border-radius: 8px;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 100%;
+}
+
+.sectionTitle {
+	font-family: "Outfit", sans-serif;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 32px;
+	color: #1c1c1c;
+	margin: 0;
+	width: 100%;
+}
+
+.sectionText {
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #3d3d3d;
+	margin: 0;
+	width: 100%;
+}
+
+.sectionList {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	width: 100%;
+}
+
+.listItem {
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #3d3d3d;
+	margin: 0 0 0 24px;
+	padding: 0;
+	position: relative;
+}
+
+.listItem::before {
+	content: "•";
+	position: absolute;
+	left: -16px;
+	color: #3d3d3d;
+}
+
+.listItem:last-child {
+	margin-bottom: 0;
+}
+
+.actions {
+	display: flex;
+	gap: 24px;
+	align-items: flex-start;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.button {
+	min-height: 48px;
+	padding: 12px 14px;
+	border-radius: 999px;
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 24px;
+	cursor: pointer;
+	transition: opacity 0.2s, background-color 0.2s, border-color 0.2s;
+	border: none;
+	white-space: nowrap;
+}
+
+.buttonPrimary {
+	background-color: #2c427a;
+	color: #ffffff;
+}
+
+.buttonPrimary:hover {
+	opacity: 0.9;
+}
+
+.buttonSecondary {
+	background-color: transparent;
+	color: #2c427a;
+	border: 1px solid #2c427a;
+}
+
+.buttonSecondary:hover {
+	opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+	.content {
+		width: 100%;
+		padding: 0 16px;
+	}
+
+	.headerContent {
+		gap: 0;
+		justify-content: space-between;
+	}
+
+	.progressBar {
+		width: 100%;
+	}
+
+	.actions {
+		flex-direction: column;
+	}
+
+	.button {
+		width: 100%;
+	}
+}
+

@@ -1,11 +1,13 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { clearError, loginAsync, registerAsync } from "@/lib/slices/authSlice";
 import styles from "./styles.module.css";
 
 export const AuthPage = () => {
+	const router = useRouter();
 	const [mode, setMode] = useState<"login" | "register">("login");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -13,6 +15,7 @@ export const AuthPage = () => {
 
 	const dispatch = useAppDispatch();
 	const { isLoading, error } = useAppSelector((state) => state.auth);
+
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -25,9 +28,15 @@ export const AuthPage = () => {
 		dispatch(clearError());
 
 		if (mode === "login") {
-			await dispatch(loginAsync({ email, password }));
+			const result = await dispatch(loginAsync({ email, password }));
+			if (loginAsync.fulfilled.match(result)) {
+				router.push("/");
+			}
 		} else {
-			await dispatch(registerAsync({ email, password }));
+			const result = await dispatch(registerAsync({ email, password }));
+			if (registerAsync.fulfilled.match(result)) {
+				router.push("/quiz");
+			}
 		}
 	};
 
