@@ -1,6 +1,9 @@
 package server
 
 import (
+	"backend/pkg/openai"
+	"os"
+
 	"github.com/fasthttp/router"
 	"github.com/valyala/fasthttp"
 
@@ -22,17 +25,21 @@ func New() *Server {
 		panic(err)
 	}
 
-	// Repositories
+	openaiAPIKey := os.Getenv("OPENAI_API_KEY")
+	if openaiAPIKey == "" {
+		panic("OPENAI_API_KEY environment variable not set")
+	}
+	client := openai.NewClient(openaiAPIKey)
+
 	userRepo := repository.NewUserRepository(bunDB)
 
-	// Services
 	authService := service.NewAuthService(userRepo)
+	summaryService := service.NewSummaryService(client)
 
-	// Handlers
 	authHandler := handler.NewAuth(authService)
+	summaryHandler := handler.NewSummary(summaryService)
 
-	// Routes
-	registerRoutes(r, authHandler)
+	registerRoutes(r, authHandler, summaryHandler)
 
 	return &Server{router: r}
 }
