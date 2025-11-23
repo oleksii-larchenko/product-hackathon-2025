@@ -1,0 +1,18 @@
+---
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+- Use functional components with hooks instead of class components
+- Use custom hooks for reusable logic
+- Use fragments to avoid unnecessary DOM elements
+- Use proper list rendering with keys
+- Prefer composition over inheritance
+- Use kebab-case for naming all folders in the project. (e.g., about-us)
+- Use kebab-case for naming all no React components files (e.g., check-is-dynamic-route.ts)
+- Use UpperCamelCase for naming React components ( e.g., AnchorScroll.tsx)
+- Always name the props type as Props and define it using an interface.
+- Use FC with a generic type such as FC<Props> or FC<PropsWithChildren<Props>> for typing React components.
+- Use naming export in React Components (e.g., export const AboutUs: FC = () => (...))
+- Use naming export in other cases
+- Whenever possible, use interfaces. If this is not possible: you need to make an Omit, you need a union type, etc., - you can use type.
